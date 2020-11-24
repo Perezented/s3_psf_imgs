@@ -7,6 +7,21 @@ const uuid = require("uuid/v4");
 const app = express();
 const port = 3030;
 
+// Defining CORS
+app.use(function (req, res, next) {
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
+
 // set up of aws s3 account
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ID,
