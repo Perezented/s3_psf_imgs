@@ -62,7 +62,8 @@ app.get("/", (req, res) => {
       const s3 = new AWS.S3();
       const response = await s3
         .listObjectsV2({
-          Bucket: "proselectflooringimages"
+          Bucket: "proselectflooringimages",
+          Prefix: "imgs"
         })
         .promise();
 
