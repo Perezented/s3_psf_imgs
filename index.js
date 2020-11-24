@@ -72,11 +72,7 @@ app.get("/", (req, res) => {
     } catch (e) {
       console.log("Erroring out man! : ", e, e.message);
     }
-    debugger;
   })();
-  // res.send({
-  //   message: "Hello World! Home Slash link."
-  // });
 });
 
 app.listen(port, () => {
