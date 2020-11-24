@@ -66,9 +66,8 @@ app.get("/", (req, res) => {
           Prefix: "imgs"
         })
         .promise();
-
-      console.log(response);
-      res.status(200).send(response);
+      let contents = response.Contents;
+      res.status(200).send(contents);
     } catch (e) {
       console.log("Erroring out man! : ", e, e.message);
     }
