@@ -5,7 +5,7 @@ const AWS = require("aws-sdk");
 const uuid = require("uuid/v4");
 
 const app = express();
-const port = 3025;
+const port = 3030;
 
 // set up of aws s3 account
 const s3 = new AWS.S3({
@@ -37,6 +37,7 @@ app.post("/upload", upload, (req, res) => {
   // IMG we are sending and to what bucket and key
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
+    Prefix: "imgs",
     Key: `${uuid()}.${fileType}`,
     Body: req.file.buffer
   };
@@ -45,9 +46,36 @@ app.post("/upload", upload, (req, res) => {
     if (error) {
       res.status(500).send(error);
     }
-
+    console.log(`File uploaded successfully. ${data.Location}`);
     res.status(200).send(data);
   });
+});
+
+app.get("/", (req, res) => {
+  (async function () {
+    try {
+      AWS.config.update({
+        accessKeyId: process.env.AWS_ID,
+        secretAccessKey: process.env.AWS_SECRET,
+        region: "us-east-2"
+      });
+      const s3 = new AWS.S3();
+      const response = await s3
+        .listObjectsV2({
+          Bucket: "proselectflooringimages"
+        })
+        .promise();
+
+      console.log(response);
+      res.status(200).send(response);
+    } catch (e) {
+      console.log("Erroring out man! : ", e, e.message);
+    }
+    debugger;
+  })();
+  // res.send({
+  //   message: "Hello World! Home Slash link."
+  // });
 });
 
 app.listen(port, () => {
