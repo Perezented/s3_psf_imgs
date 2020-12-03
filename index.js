@@ -6,7 +6,7 @@ const uuid = require("uuid/v4");
 
 const app = express();
 const port = 3030;
-
+app.use(express.json());
 // Defining CORS
 app.use(function (req, res, next) {
   res.setHeader(
@@ -85,6 +85,7 @@ app.get("/", (req, res) => {
       res.status(200).send(contents);
     } catch (e) {
       console.log("Erroring out man! : ", e, e.message);
+      res.status(400).send(`Erroring out man!, ${e}`);
     }
   })();
 });
