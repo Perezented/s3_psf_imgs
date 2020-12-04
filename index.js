@@ -90,9 +90,9 @@ app.get("/images", (req, res) => {
   })();
 });
 app.get("/", (req, res) => {
-  res
-    .status(200)
-    .send("Congrats the servers up, look at images on the /images endpoint.");
+  res.status(200).json({
+    Message: "Congrats the servers up, look at images on the /images endpoint."
+  });
 });
 app.listen(port, () => {
   console.log(`server is up at http://localhost:${port}
