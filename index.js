@@ -66,7 +66,7 @@ app.post("/upload", upload, (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
+app.get("/images", (req, res) => {
   (async function () {
     try {
       AWS.config.update({
@@ -89,7 +89,11 @@ app.get("/", (req, res) => {
     }
   })();
 });
-
+app.get("/", (req, res) => {
+  res
+    .status(200)
+    .send("Congrats the servers up, look at images on the /images endpoint.");
+});
 app.listen(port, () => {
   console.log(`server is up at http://localhost:${port}
   `);
