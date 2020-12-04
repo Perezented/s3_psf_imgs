@@ -5,7 +5,7 @@ const AWS = require("aws-sdk");
 const uuid = require("uuid/v4");
 
 const app = express();
-const port = 3030;
+const port = process.env.PORT || 3030;
 app.use(express.json());
 // Defining CORS
 app.use(function (req, res, next) {
