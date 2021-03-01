@@ -74,11 +74,37 @@ app.get("/images", (req, res) => {
         secretAccessKey: process.env.AWS_SECRET,
         region: "us-east-2"
       });
+
       const s3 = new AWS.S3();
       const response = await s3
         .listObjectsV2({
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Prefix: "imgs"
+          Bucket: process.env.AWS_BUCKET_NAME
+        })
+        .promise();
+      let contents = response.Contents;
+      res.status(200).send(contents);
+      console.log(process.env.AWS_BUCKET_NAME);
+      console.log(process.env.AWS_BUCKET_NAME_COMPRESSED);
+      console.log(contents);
+    } catch (e) {
+      console.log("Erroring out man! : ", e, e.message);
+      res.status(400).send(`Erroring out man!, ${e}`);
+    }
+  })();
+});
+
+app.get("/compressed_images", (req, res) => {
+  (async function () {
+    try {
+      AWS.config.update({
+        accessKeyId: process.env.AWS_ID,
+        secretAccessKey: process.env.AWS_SECRET,
+        region: "us-east-2"
+      });
+      const s3 = new AWS.S3();
+      const response = await s3
+        .listObjectsV2({
+          Bucket: process.env.AWS_BUCKET_NAME_COMPRESSED
         })
         .promise();
       let contents = response.Contents;
@@ -89,6 +115,7 @@ app.get("/images", (req, res) => {
     }
   })();
 });
+
 app.get("/", (req, res) => {
   res.status(200).json({
     Message: "Congrats the servers up, look at images on the /images endpoint."
