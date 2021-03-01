@@ -83,9 +83,6 @@ app.get("/images", (req, res) => {
         .promise();
       let contents = response.Contents;
       res.status(200).send(contents);
-      console.log(process.env.AWS_BUCKET_NAME);
-      console.log(process.env.AWS_BUCKET_NAME_COMPRESSED);
-      console.log(contents);
     } catch (e) {
       console.log("Erroring out man! : ", e, e.message);
       res.status(400).send(`Erroring out man!, ${e}`);
